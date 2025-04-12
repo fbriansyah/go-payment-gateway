@@ -44,7 +44,7 @@ sequenceDiagram
 	LD ->> US: Return result
 ```
 
-### Trigger Transfer
+### Trigger Transfer/Reroute
 ```mermaid
 sequenceDiagram
   autonumber
@@ -53,7 +53,7 @@ sequenceDiagram
 	participant DB as Database
 	participant PC as Processor Service
 
-	MB ->> OC: Consume Transfer Started
+	MB ->> OC: Consume Transfer Started/rerouted
 	OC ->> DB: Get Processor Details
 	OC ->> PC: Trigger Transfer
 	PC ->> OC: Return result
