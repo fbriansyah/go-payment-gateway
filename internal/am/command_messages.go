@@ -8,7 +8,7 @@ import (
 	"github.com/fbriansyah/go-payment-gateway/internal/ddd"
 	"github.com/fbriansyah/go-payment-gateway/internal/registry"
 	"google.golang.org/protobuf/proto"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (

@@ -37,17 +37,21 @@ type (
 		Publish(ctx context.Context, topicName string, reply ddd.Reply) error
 	}
 
+	// ReplyPublisher  = MessagePublisher[ddd.Reply]
+	// ReplySubscriber = MessageSubscriber[IncomingReplyMessage]
+	// ReplyStream     = MessageStream[ddd.Reply, IncomingReplyMessage]
+
 	replyPublisher struct {
-		reg registry.Registry
+		reg       registry.Registry
 		publisher MessagePublisher
 	}
 
 	replyMessage struct {
-		id string
-		name string 
-		payload ddd.ReplyPayload
+		id         string
+		name       string
+		payload    ddd.ReplyPayload
 		occurredAt time.Time
-		msg IncomingMessageBase
+		msg        IncomingMessageBase
 	}
 )
 
@@ -146,7 +150,3 @@ func (h replyMsgHandler) HandleMessage(ctx context.Context, msg IncomingMessage)
 
 	return h.handler.HandleReply(ctx, replyMsg)
 }
-
-
-
-

@@ -16,11 +16,6 @@ type (
 		SentAt() time.Time
 	}
 
-	Message interface {
-		MessageBase
-		Data() []byte
-	}
-
 	IncomingMessageBase interface {
 		MessageBase
 		ReceivedAt() time.Time
@@ -28,10 +23,6 @@ type (
 		NAck() error
 		Extend() error
 		Kill() error
-	}
-	IncomingMessage interface {
-		IncomingMessageBase
-		Data() []byte
 	}
 
 	MessageHandler interface {
@@ -54,25 +45,36 @@ type (
 
 	MessagePublisherFunc func(ctx context.Context, topicName string, msg Message) error
 
-	MessageStreamMiddleware = func(next MessageStream) MessageStream
+	MessageStreamMiddleware    = func(next MessageStream) MessageStream
 	MessagePublisherMiddleware = func(next MessagePublisher) MessagePublisher
-	MessageHandlerMiddleware = func(next MessageHandler) MessageHandler
-	
+	MessageHandlerMiddleware   = func(next MessageHandler) MessageHandler
+
+	Message interface {
+		MessageBase
+		Data() []byte
+	}
+
+	IncomingMessage interface {
+		IncomingMessageBase
+		Data() []byte
+	}
+
 	message struct {
-		id string
-		name string 
-		subject string
-		data []byte
+		id       string
+		name     string
+		subject  string
+		data     []byte
 		metadata ddd.Metadata
-		sentAt time.Time
+		sentAt   time.Time
 	}
 
 	messagePublisher struct {
 		publisher MessagePublisher
 	}
+
 	messageSubscriber struct {
 		subscriber MessageSubscriber
-		mws []MessageHandlerMiddleware
+		mws        []MessageHandlerMiddleware
 	}
 )
 
@@ -117,5 +119,3 @@ func (s messageSubscriber) Subscribe(topicName string, handler MessageHandler, o
 func (s messageSubscriber) Unsubscribe() error {
 	return s.subscriber.Unsubscribe()
 }
-
-
